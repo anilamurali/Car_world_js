@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car world</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="icon" href="https://th.bing.com/th/id/OIP.JDWhoOKsRsG3e9zslTGoVQHaHa?pid=ImgDet&rs=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@700&family=Courgette&family=Kaisei+HarunoUmi&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <div class="container-fluid body">
+        <div class="container ">
+            <div class="row ">
+                <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 p-5">
+                    <div class="car mt-5 p-5">
+                        <label for="" class="form-label">Car Name</label>
+                        <input type="text" class="form-control" placeholder="Car brand" id="name">
+                        <label for="" class="form-label mt-4">Car Price</label>
+                        <input type="text" class="form-control" placeholder="Price" id="price">
+                        <label for="" class="form-label mt-4">Key</label>
+                        <input type="text" class="form-control" placeholder="Key" id="key">
+                        <div class="text-center mt-5">
+                            <button class="btn btn-primary" onclick="storeData()">Store Data</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 p-5">
+                    <div class="car mt-5 p-5">
+                        <label for="" class="form-label">Retrive Key</label>
+                        <input type="text" class="form-control" placeholder="Enter key to retrive data" id="retrivekey">
+                        
+                        <div class="text-center mt-5">
+                            <button class="btn btn-primary" onclick="retriveData()">Retrive Data</button>
+                        </div>
+                        <div id="data" class="text-center mt-4 data">
+
+                            
+                            <div class="card" style="width: 15rem;">
+                                <ul class="list-group list-group-flush">
+                                  <li class="list-group-item" id="cName"></li>
+                                  <li class="list-group-item" id="cPrice"></li>
+                                  <li class="list-group-item" id="cKey"></li>
+                                </ul>
+                              </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 p-5">
+                    <div class="car mt-5 p-5">
+                        <label for="" class="form-label">Remove Key</label>
+                        <input type="text" class="form-control" placeholder="Enter key to remove data" id="removekey" >
+                        <div class="text-center mt-5">
+                            <button class="btn btn-primary" onclick="removeData()">Remove Data</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-grid gap-2 px-5">
+                    <button class="btn btn-primary" type="button" onclick="clearAll()">Clear all Data</button>
+                    
+                  </div>
+
+            </div>
+        </div>
+        
+    </div>
+    <script>
+        
+        function storeData(){
+        var carName=document.getElementById('name').value;
+        var carPrice=document.getElementById('price').value;
+        var carKey=document.getElementById('key').value;
+        console.log(carName);
+        console.log(carPrice);
+        console.log(carKey);
+            var car={
+                
+                name:carName,
+                price:carPrice,
+                key:carKey
+                
+            }
+            localStorage.setItem(carKey,JSON.stringify(car));
+            document.getElementById('name').value='';
+            document.getElementById('price').value='';
+            document.getElementById('key').value='';
+            alert("Car stored Successfully");
+
+        }
+        function retriveData(){
+            var key=document.getElementById('retrivekey').value;
+            var carData=JSON.parse(localStorage.getItem(key));
+
+            if(key==0){
+
+                alert("Car not Found !");
+            }
+            else{
+                console.log(carData);
+                document.getElementById('cName').innerHTML=`Car Brand :${carData.name}`;
+                document.getElementById('cPrice').innerHTML=`Car Price :${carData.price}`;
+                document.getElementById('cKey').innerHTML=` Key :${carData.key}`;
+                document.querySelector('.data').style.display='block';
+
+
+
+            }
+
+
+        }
+        function removeData(){
+            var key=document.getElementById('removekey').value;
+            console.log(key);
+            localStorage.removeItem(key);
+            alert("Car deleted Successfully");
+            document.getElementById('removekey').value='';
+
+        }
+        function clearAll(){
+            localStorage.clear();
+            alert("Removed all data")
+        }
+
+
+    </script>
+</body>
+</html>
